@@ -1,0 +1,15 @@
+django>=5.0
+djangorestframework
+djangorestframework-simplejwt
+django-cors-headers
+django-mongodb-backend
+channels
+channels-redis
+spotipy
+pylast
+musicbrainzngs
+scikit-learn
+pandas
+numpy
+Pillow
+python-dotenv
