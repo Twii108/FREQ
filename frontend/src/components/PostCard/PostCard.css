@@ -1,0 +1,133 @@
+.post-card {
+  padding: 18px;
+  margin-bottom: 16px;
+  border-radius: var(--freq-radius-lg);
+  background: var(--freq-bg-card);
+  border: 1px solid var(--freq-purple-light);
+  box-shadow: var(--freq-shadow-sm);
+  color: var(--freq-text);
+}
+.post-header { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px; }
+.post-avatar {
+  width: 42px; height: 42px; border-radius: 50%; overflow: hidden;
+  flex-shrink: 0; cursor: pointer; border: 2px solid var(--freq-purple-light);
+}
+.post-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.avatar-mini {
+  width: 100%; height: 100%;
+  background: var(--freq-gradient);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 16px; color: var(--freq-bg);
+}
+.post-meta { flex: 1; min-width: 0; }
+.post-user-row { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.post-username { font-weight: 800; font-size: 15px; cursor: pointer; color: var(--freq-text); }
+.post-username:hover { color: var(--freq-text-secondary); }
+.verified-badge { color: #38BDF8; font-size: 13px; }
+.post-artist-tag { color: #94A3B8; font-weight: 700; font-size: 13px; }
+.post-time-row { display: flex; align-items: center; gap: 8px; margin-top: 2px; }
+.post-time { color: var(--freq-text-secondary); font-size: 12px; font-weight: 500; }
+.post-match { color: var(--freq-text); font-size: 11px; font-weight: 700; background: var(--freq-bg-elevated); padding: 2px 8px; border-radius: 6px; border: 1px solid var(--freq-purple-light); }
+.hot-take-badge { font-size: 18px; }
+.post-content { font-size: 15px; line-height: 1.5; color: var(--freq-text); margin-bottom: 12px; white-space: pre-wrap; font-weight: 400; }
+.post-rating { display: flex; gap: 3px; margin-bottom: 12px; }
+.star { color: #475569; font-size: 18px; }
+.star.filled { color: #F59E0B; }
+.post-track-card {
+  display: flex; align-items: center; gap: 12px;
+  background: var(--freq-bg-elevated); padding: 12px;
+  border-radius: var(--freq-radius-md); margin-bottom: 12px;
+  border: 1px solid var(--freq-purple-light);
+}
+.ptc-art { width: 48px; height: 48px; border-radius: 8px; object-fit: cover; }
+.ptc-info { flex: 1; min-width: 0; }
+.ptc-title { display: block; font-size: 14px; font-weight: 700; color: var(--freq-text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ptc-artist { display: block; font-size: 12px; color: var(--freq-text-secondary); }
+.ptc-play {
+  width: 34px; height: 34px; border-radius: 50%;
+  background: var(--freq-purple); display: flex;
+  align-items: center; justify-content: center;
+  color: #FFFFFF; flex-shrink: 0;
+}
+.post-image { width: 100%; border-radius: var(--freq-radius-md); margin-bottom: 12px; max-height: 360px; object-fit: cover; }
+.post-actions { display: flex; align-items: center; gap: 24px; padding-top: 4px; }
+.action-btn {
+  display: flex; align-items: center; gap: 6px;
+  background: none; color: var(--freq-text-secondary);
+  font-size: 13px; font-weight: 700;
+}
+.action-btn:hover { color: var(--freq-text); }
+.action-btn.liked { color: #F472B6; }
+.action-btn.reposted { color: #38BDF8; }
+.action-btn.bookmarked { color: #A78BFA; }
+
+/* Comments Modal Dialog */
+.comments-modal {
+  width: 100%;
+  max-width: 440px;
+  padding: 24px;
+  border-radius: var(--freq-radius-xl);
+  display: flex;
+  flex-direction: column;
+  max-height: 80vh;
+  background: var(--freq-bg-card);
+  border: 1px solid #E2E8F0;
+  color: var(--freq-text);
+}
+.comments-list.scrollable {
+  flex: 1;
+  overflow-y: auto;
+  margin: 16px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 320px;
+  text-align: left;
+}
+.comments-empty {
+  text-align: center;
+  color: var(--freq-text-dim);
+  font-size: 14px;
+  padding: 30px 0;
+}
+.comment-item {
+  background: var(--freq-bg-input);
+  padding: 12px 16px;
+  border-radius: var(--freq-radius-md);
+  border: 1px solid #CBD5E1;
+}
+.comment-meta {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 4px;
+  font-size: 12px;
+}
+.comment-meta strong {
+  color: var(--freq-text);
+}
+.comment-time {
+  color: var(--freq-text-secondary);
+}
+.comment-content {
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--freq-text);
+}
+.comment-form {
+  display: flex;
+  gap: 10px;
+}
+.comment-form input {
+  flex: 1;
+  background: var(--freq-bg-input);
+  border: 1px solid #CBD5E1;
+  color: var(--freq-text);
+}
+.comment-submit-btn {
+  padding: 0 16px;
+  justify-content: center;
+}
+
+
+
+

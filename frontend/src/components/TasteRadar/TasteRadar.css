@@ -1,0 +1,129 @@
+.taste-radar-container {
+  padding: 20px 20px 32px 20px;
+  border-radius: 20px;
+  margin-bottom: 36px;
+  background: var(--freq-bg-card);
+  border: 1px solid #E2E8F0;
+  box-shadow: var(--freq-shadow-sm);
+  color: var(--freq-text);
+}
+
+.tr-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.tr-badge {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: var(--freq-purple);
+  background: var(--freq-bg-input);
+  padding: 4px 12px;
+  border-radius: 12px;
+  border: 1px solid #CBD5E1;
+}
+
+.tr-title {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--freq-text);
+  margin: 10px 0 4px 0;
+}
+
+.tr-synergy-score {
+  font-size: 14px;
+  font-weight: 800;
+  color: #06B6D4;
+}
+
+.tr-spectrum-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.tr-label-wrap {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--freq-text-secondary);
+  margin-bottom: 4px;
+}
+
+.tr-bar-track {
+  position: relative;
+  height: 8px;
+  background: var(--freq-bg-input);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.tr-bar-fill.u1 {
+  position: absolute;
+  height: 100%;
+  background: var(--freq-purple);
+  border-radius: 4px;
+  opacity: 0.9;
+}
+
+.tr-bar-fill.u2 {
+  position: absolute;
+  height: 100%;
+  background: #38BDF8;
+  border-radius: 4px;
+  opacity: 0.8;
+}
+
+.tr-venn-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 110px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.venn-circle {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--freq-text);
+  position: absolute;
+  box-shadow: var(--freq-shadow-sm);
+}
+
+.circle-u1 {
+  left: calc(50% - 75px);
+  background: var(--freq-bg-card);
+  border: 2px solid var(--freq-purple);
+}
+
+.circle-u2 {
+  right: calc(50% - 75px);
+  background: var(--freq-bg-card);
+  border: 2px solid #38BDF8;
+}
+
+.venn-overlap-badge {
+  position: relative;
+  z-index: 10;
+  background: var(--freq-bg-elevated);
+  border: 1.5px solid var(--freq-purple);
+  padding: 6px 14px;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--freq-text);
+  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.2);
+}
+
+

@@ -1,0 +1,174 @@
+.concerts-page {
+  padding: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+  min-height: 100vh;
+  background-color: #f9fafb;
+}
+
+.concerts-header {
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.concerts-header .neon-text {
+  font-size: 3rem;
+  color: #111827;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+
+.sub-text {
+  color: #4b5563;
+  font-size: 1.1rem;
+}
+
+.city-search {
+  margin-top: 20px;
+  padding: 15px 25px;
+  width: 100%;
+  max-width: 500px;
+  border-radius: var(--freq-radius-lg);
+  border: 1px solid #e5e7eb;
+  background: var(--freq-bg-card);
+  color: var(--freq-text);
+  font-size: 1.1rem;
+  outline: none;
+  box-shadow: var(--freq-shadow-sm);
+  transition: all 0.3s ease;
+}
+
+.city-search:focus {
+  border-color: #8b5cf6;
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+}
+
+.concerts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 30px;
+}
+
+.concert-card {
+  background: var(--freq-bg-card);
+  border-radius: var(--freq-radius-lg);
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
+  box-shadow: var(--freq-shadow-md);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.concert-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.concert-image {
+  height: 220px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.concert-date-badge {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: rgba(var(--freq-bg-rgb), 0.95);
+  backdrop-filter: blur(5px);
+  padding: 8px 15px;
+  border-radius: var(--freq-radius-md);
+  font-weight: 700;
+  color: #8b5cf6;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.concert-info {
+  padding: 25px;
+}
+
+.concert-info h3 {
+  font-size: 1.5rem;
+  margin-bottom: 5px;
+  color: var(--freq-text);
+  font-weight: 800;
+}
+
+.concert-artist {
+  color: #8b5cf6;
+  font-weight: 600;
+  margin-bottom: 10px;
+  font-size: 1.1rem;
+}
+
+.concert-location {
+  color: var(--freq-text-muted);
+  font-size: 0.95rem;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.concert-attendees {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  padding-top: 20px;
+  border-top: 1px solid #f3f4f6;
+  font-size: 0.95rem;
+  color: #4b5563;
+  font-weight: 500;
+}
+
+.attendee-avatars {
+  display: flex;
+}
+
+.attendee-avatars img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid var(--freq-bg-card);
+  margin-left: -12px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.attendee-avatars img:first-child {
+  margin-left: 0;
+}
+
+.concert-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.btn-primary, .btn-secondary {
+  flex: 1;
+  padding: 14px;
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s ease;
+  font-size: 1rem;
+}
+
+.btn-primary {
+  background: #8b5cf6;
+  color: #ffffff;
+}
+.btn-primary:hover {
+  background: #7c3aed;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+}
+
+.btn-secondary {
+  background: #f3f4f6;
+  color: #374151;
+}
+.btn-secondary:hover {
+  background: #e5e7eb;
+  transform: translateY(-2px);
+}

@@ -1,0 +1,145 @@
+.lyrics-drawer-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  z-index: 300;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.lyrics-drawer {
+  width: 100%;
+  max-width: 480px;
+  height: 100%;
+  background: rgba(18, 18, 26, 0.95);
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 30px 24px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: -10px 0 40px rgba(0, 0, 0, 0.8);
+  overflow-y: auto;
+}
+
+.lyrics-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 14px;
+}
+
+.lyrics-title {
+  font-size: 18px;
+  font-weight: 800;
+  color: #fff;
+  margin: 0;
+}
+
+.lyrics-close-btn {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.lyrics-tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.lyrics-tab-btn {
+  flex: 1;
+  padding: 10px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 13px;
+  font-weight: 700;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.lyrics-tab-btn.active {
+  background: rgba(168, 85, 247, 0.2);
+  color: #fff;
+  border-color: rgba(168, 85, 247, 0.4);
+}
+
+.lyrics-body {
+  white-space: pre-wrap;
+  font-size: 15px;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.9);
+  font-family: var(--freq-font-heading);
+}
+
+.karaoke-line {
+  margin: 8px 0;
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.karaoke-line.active-karaoke {
+  color: #fff;
+  background: linear-gradient(90deg, rgba(255, 0, 128, 0.3), rgba(121, 40, 202, 0.3));
+  border-left: 4px solid var(--freq-pink);
+  font-weight: 800;
+  font-size: 17px;
+  transform: translateX(6px);
+  text-shadow: 0 0 12px rgba(255, 0, 128, 0.8);
+}
+
+.storyteller-card {
+  padding: 20px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.storyteller-card h4 {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--freq-pink);
+  margin: 0 0 10px 0;
+}
+
+.storyteller-card p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 16px;
+}
+
+.storyteller-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #00f2fe;
+}
+
+.bio-body {
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.8);
+}
+
