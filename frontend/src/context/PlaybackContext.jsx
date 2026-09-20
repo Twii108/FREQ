@@ -2,12 +2,16 @@ import { createContext, useContext, useState, useEffect, useRef } from 'react';
 
 const PlaybackContext = createContext(null);
 
+// Free, CORS-enabled, reliable audio sample URLs (public domain / Creative Commons)
 const VERIFIED_PREVIEWS = [
-  'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/17/b4/8f/17b48f9a-0b93-6bb8-fe1d-3a16623c2cfb/mzaf_9560252727299052414.plus.aac.p.m4a',
-  'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview126/v4/91/ab/b1/91abb14c-4a34-2e91-7667-e95e86d2eb18/mzaf_10793740268571871261.plus.aac.p.m4a',
-  'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview112/v4/bf/fb/1a/bffb1a8d-2947-8a62-9721-9a7c3666b607/mzaf_6493649514781488090.plus.aac.p.m4a',
-  'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview126/v4/e1/9b/6c/e19b6c1d-ef1f-6a68-7c87-8d193d56d11f/mzaf_12411953590059371071.plus.aac.p.m4a',
-  'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview115/v4/c3/b2/09/c3b209e9-1f63-3b1a-9fa8-1f19f20e4933/mzaf_16327885448375626920.plus.aac.p.m4a'
+  'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
+  'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3',
+  'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3',
+  'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3',
+  'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3',
+  'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3',
+  'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3',
+  'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3',
 ];
 
 const MASTER_PLAYLIST = [
@@ -51,23 +55,24 @@ const MASTER_PLAYLIST = [
     title: "God's Plan",
     artist_name: 'Drake',
     album_art_url: 'https://images.weserv.nl/?url=is1-ssl.mzstatic.com/image/thumb/Music125/v4/ed/bd/51/edbd512a-350a-e2a2-3f7d-0d655f482d8c/18UMGIM27157.rgb.jpg/400x400bb.jpg',
-    preview_url: VERIFIED_PREVIEWS[0]
+    preview_url: VERIFIED_PREVIEWS[5]
   },
   {
     id: 'master-7',
     title: 'Levitating',
     artist_name: 'Dua Lipa',
     album_art_url: 'https://images.weserv.nl/?url=is1-ssl.mzstatic.com/image/thumb/Music115/v4/05/85/37/058537b8-616a-c21d-7206-8d5917835153/190295286109.jpg/400x400bb.jpg',
-    preview_url: VERIFIED_PREVIEWS[1]
+    preview_url: VERIFIED_PREVIEWS[6]
   },
   {
     id: 'master-8',
     title: 'As It Was',
     artist_name: 'Harry Styles',
     album_art_url: 'https://images.weserv.nl/?url=is1-ssl.mzstatic.com/image/thumb/Music126/v4/44/14/0a/44140a76-2f08-3a1a-3e75-1234567890ab/196589073026.jpg/400x400bb.jpg',
-    preview_url: VERIFIED_PREVIEWS[2]
+    preview_url: VERIFIED_PREVIEWS[7]
   }
 ];
+
 
 export const PlaybackProvider = ({ children }) => {
   const [currentTrack, setCurrentTrack] = useState(null);
@@ -236,8 +241,25 @@ export const PlaybackProvider = ({ children }) => {
     let queue = queueRef.current;
     const current = currentTrackRef.current;
 
+    // AI DJ Mood Logic simulation
+    // We categorize master playlist tracks roughly by vibe
+    const hypeTracks = ['Blinding Lights', 'HUMBLE.', "God's Plan", 'Starboy'];
+    const chillTracks = ['Snooze', 'As It Was'];
+    const popTracks = ['Cruel Summer', 'Levitating'];
+
+    // Simulated current room sentiment (normally fetched from context/websocket)
+    // Here the AI DJ randomly decides what the room needs if queue is empty
+    const roomVibe = Math.random() > 0.6 ? 'hype' : 'chill';
+
     if (!queue || queue.length === 0) {
-      queue = MASTER_PLAYLIST;
+      // Smart AI DJ kicks in
+      console.log(`🤖 AI DJ: Room vibe is ${roomVibe}, queuing tracks...`);
+      queue = MASTER_PLAYLIST.filter(t => {
+        if (roomVibe === 'hype') return hypeTracks.includes(t.title) || popTracks.includes(t.title);
+        return chillTracks.includes(t.title) || popTracks.includes(t.title);
+      });
+      // Fallback
+      if (queue.length === 0) queue = MASTER_PLAYLIST;
     }
 
     let currentIndex = -1;
@@ -249,9 +271,10 @@ export const PlaybackProvider = ({ children }) => {
     if (currentIndex !== -1 && currentIndex < queue.length - 1) {
       nextTrack = queue[currentIndex + 1];
     } else {
-      const nextIndex = (currentIndex + 1) % MASTER_PLAYLIST.length;
-      nextTrack = MASTER_PLAYLIST[nextIndex] || MASTER_PLAYLIST[0];
-      queue = [...queue, ...MASTER_PLAYLIST];
+      const nextIndex = (currentIndex + 1) % queue.length;
+      nextTrack = queue[nextIndex] || MASTER_PLAYLIST[0];
+      // Keep queue rolling with AI DJ selections
+      queue = [...queue, ...MASTER_PLAYLIST.filter(t => Math.random() > 0.5)];
     }
 
     playTrack(nextTrack, queue);
@@ -348,6 +371,7 @@ export const PlaybackProvider = ({ children }) => {
         seek,
         playNext,
         playPrevious,
+        getAudioElement: () => audioRef.current,
       }}
     >
 

@@ -68,6 +68,24 @@ class ChatConsumer(AsyncWebsocketConsumer):
         if not message.strip():
             return
 
+        # Simple sentiment analysis using VaderSentiment
+        sentiment_score = 0
+        sentiment_mood = 'chill'
+        try:
+            from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
+            analyzer = SentimentIntensityAnalyzer()
+            sentiment_dict = analyzer.polarity_scores(message)
+            sentiment_score = sentiment_dict['compound']
+            
+            if sentiment_score >= 0.05:
+                sentiment_mood = 'hype'
+            elif sentiment_score <= -0.05:
+                sentiment_mood = 'melancholic'
+            else:
+                sentiment_mood = 'chill'
+        except Exception as e:
+            pass
+
         if self.user and self.user.is_authenticated:
             await self.save_message(message)
             await self.channel_layer.group_send(self.room_group_name, {
@@ -77,6 +95,8 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 'avatar_url': self.user.avatar_url,
                 'user_id': str(self.user.id),
                 'timestamp': timezone.now().isoformat(),
+                'sentiment_mood': sentiment_mood,
+                'sentiment_score': sentiment_score
             })
 
     async def chat_message(self, event):
@@ -87,6 +107,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
             'avatar_url': event.get('avatar_url', ''),
             'user_id': event.get('user_id', ''),
             'timestamp': event['timestamp'],
+            'sentiment_mood': event.get('sentiment_mood', 'chill')
         }))
 
     async def user_join(self, event):
