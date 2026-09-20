@@ -1,6 +1,6 @@
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { useRef, useMemo, useState, useEffect, useCallback, useLayoutEffect } from 'react';
-import { Environment, Stars, Sparkles, Text, Float, Html, useGLTF } from '@react-three/drei';
+import { Environment, Stars, Sparkles, Text, Float, Html } from '@react-three/drei';
 import { useAudioAnalyzer } from '../../hooks/useAudioAnalyzer';
 import { usePlayback } from '../../context/PlaybackContext';
 import { EffectComposer, Bloom } from '@react-three/postprocessing';
@@ -153,12 +153,10 @@ const HolographicSpeaker = ({ moodColor, dataArray }) => {
 // ── User avatar that dances to music ─────────────────────────────────────────
 const Avatar = ({ position, username, color, dancingOffset, isPlayer, setNearbyUser }) => {
   const group = useRef();
+  const leftArm = useRef();
+  const rightArm = useRef();
   const { dataArray } = useAudioAnalyzer();
   const [showInfo, setShowInfo] = useState(false);
-  
-  // Load a real human 3D model (Soldier from Three.js examples)
-  const { scene } = useGLTF('https://raw.githubusercontent.com/mrdoob/three.js/master/examples/models/gltf/Soldier.glb');
-  const clone = useMemo(() => scene.clone(), [scene]);
 
   useFrame(({ clock, camera }) => {
     if (group.current) {
@@ -166,10 +164,12 @@ const Avatar = ({ position, username, color, dancingOffset, isPlayer, setNearbyU
       const beat = (dataArray[2] || 0) / 255;
       const yOffset = Math.sin(t * 3 + dancingOffset) * 0.15 + beat * 0.25;
       group.current.position.y = position[1] + yOffset;
-      // Face forward or animate rotation slightly
       group.current.rotation.y = Math.sin(t * 1.5 + dancingOffset) * 0.3;
 
-      // Proximity check for floating UI (1.5 units = very close)
+      if (leftArm.current) leftArm.current.rotation.x = Math.sin(t * 4 + dancingOffset) * 0.5;
+      if (rightArm.current) rightArm.current.rotation.x = -Math.sin(t * 4 + dancingOffset) * 0.5;
+
+      // Proximity check for floating UI (1.8 units = very close)
       if (!isPlayer && setNearbyUser) {
         const dist = camera.position.distanceTo(group.current.position);
         if (dist < 1.8 && !showInfo) {
@@ -186,12 +186,43 @@ const Avatar = ({ position, username, color, dancingOffset, isPlayer, setNearbyU
 
   return (
     <group ref={group} position={position}>
-      {/* 3D Human Model */}
-      <primitive object={clone} scale={1.2} position={[0, -0.2, 0]} />
+      {/* Torso */}
+      <mesh position={[0, 0.8, 0]}>
+        <boxGeometry args={[0.45, 0.6, 0.25]} />
+        <meshStandardMaterial color={color} roughness={0.4} metalness={0.6} emissive={color} emissiveIntensity={0.2} />
+      </mesh>
+      {/* Head */}
+      <mesh position={[0, 1.35, 0]}>
+        <boxGeometry args={[0.35, 0.35, 0.35]} />
+        <meshStandardMaterial color="#ffe0d0" emissive={color} emissiveIntensity={0.1} roughness={0.5} />
+      </mesh>
+      {/* Left Arm */}
+      <group ref={leftArm} position={[-0.3, 1.0, 0]}>
+        <mesh position={[0, -0.25, 0]}>
+          <cylinderGeometry args={[0.08, 0.08, 0.5]} />
+          <meshStandardMaterial color={color} />
+        </mesh>
+      </group>
+      {/* Right Arm */}
+      <group ref={rightArm} position={[0.3, 1.0, 0]}>
+        <mesh position={[0, -0.25, 0]}>
+          <cylinderGeometry args={[0.08, 0.08, 0.5]} />
+          <meshStandardMaterial color={color} />
+        </mesh>
+      </group>
+      {/* Legs */}
+      <mesh position={[-0.15, 0.3, 0]}>
+        <cylinderGeometry args={[0.1, 0.1, 0.6]} />
+        <meshStandardMaterial color="#222" />
+      </mesh>
+      <mesh position={[0.15, 0.3, 0]}>
+        <cylinderGeometry args={[0.1, 0.1, 0.6]} />
+        <meshStandardMaterial color="#222" />
+      </mesh>
 
       {/* Crown for player's own avatar */}
       {isPlayer && (
-        <mesh position={[0, 2.3, 0]}>
+        <mesh position={[0, 1.65, 0]}>
           <coneGeometry args={[0.15, 0.2, 5]} />
           <meshStandardMaterial color="#ffd700" emissive="#ffd700" emissiveIntensity={1} />
         </mesh>
@@ -205,15 +236,13 @@ const Avatar = ({ position, username, color, dancingOffset, isPlayer, setNearbyU
 
       {/* Username label */}
       <Float speed={1.5} rotationIntensity={0} floatIntensity={0.3}>
-        <Text position={[0, 2.6, 0]} fontSize={0.15} color="white" anchorX="center" anchorY="middle" outlineWidth={0.02} outlineColor="#000">
+        <Text position={[0, 2.0, 0]} fontSize={0.15} color="white" anchorX="center" anchorY="middle" outlineWidth={0.02} outlineColor="#000">
           {isPlayer ? '⭐ YOU' : `@${username}`}
         </Text>
       </Float>
     </group>
   );
 };
-
-useGLTF.preload('https://raw.githubusercontent.com/mrdoob/three.js/master/examples/models/gltf/Soldier.glb');
 
 // ── Bonfire scene ──────────────────────────────────────────────────────────
 const BonfireScene = ({ moodColor, dataArray }) => {
@@ -475,8 +504,27 @@ const ImmersiveRoom = ({ onClose, mood, track, currentUser }) => {
       default: return '#00ff88';
     }
   }, [mood]);
-
-  const [roomUsers, setRoomUsers] = useState({});
+  // Simulate fake users joining (for popups)
+  useEffect(() => {
+    const users = ['melody_finder', 'arjun_vibe', 'chloe_grooves', 'sarah_vibe'];
+    let i = 0;
+    const timer = setInterval(() => {
+      if (i >= users.length) { clearInterval(timer); return; }
+      const user = users[i++];
+      const id = Date.now();
+      setPopups(p => [...p, { id, text: `👋 @${user} entered the room!` }]);
+      setChatMessages(m => [...m, { user, text: '✨ Just joined!', color: '#aaa' }]);
+      setTimeout(() => setPopups(p => p.filter(x => x.id !== id)), 3500);
+    }, 3000);
+    return () => clearInterval(timer);
+  }, []);
+  const [roomUsers, setRoomUsers] = useState({
+    'alex_beats': { username: 'alex_beats', color: '#ff00ff', position: [-4, 0, -2] },
+    'tanvi_roliya': { username: 'tanvi_roliya', color: '#00ffff', position: [4, 0, -3] },
+    'melody_finder': { username: 'melody_finder', color: '#ffff00', position: [-2, 0, -6] },
+    'rhythm_king': { username: 'rhythm_king', color: '#ff3300', position: [3, 0, -6] },
+    'chloe_grooves': { username: 'chloe_grooves', color: '#33ff33', position: [-5, 0, -4] },
+  });
   const wsRef = useRef(null);
   
   // Real-time multiplayer connection
