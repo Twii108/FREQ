@@ -9,11 +9,11 @@ const InteractiveBackground = () => {
     const ctx = canvas.getContext('2d');
     let animationFrameId;
     let width, height;
-
-    const notes = [];
-    const numNotes = 35;
-    const noteSymbols = ['♪', '♫', '♬', '𝄞', '♭', '♮'];
-    let mouse = { x: -1000, y: -1000 };
+    
+    // Grid configuration
+    const colWidth = 40;
+    const drops = [];
+    const numDrops = 40;
 
     const resize = () => {
       width = window.innerWidth;
@@ -25,119 +25,96 @@ const InteractiveBackground = () => {
     window.addEventListener('resize', resize);
     resize();
 
-    class MusicNote {
+    class FallingLine {
       constructor() {
-        this.reset();
+        this.reset(true);
       }
 
-      reset() {
-        this.x = Math.random() * width;
-        this.y = Math.random() * height + height; // start below screen
-        this.size = Math.random() * 20 + 15;
-        this.symbol = noteSymbols[Math.floor(Math.random() * noteSymbols.length)];
-        this.speedY = Math.random() * 1.5 + 0.5;
-        this.speedX = Math.random() * 1 - 0.5;
-        this.opacity = Math.random() * 0.5 + 0.2;
-        this.phase = Math.random() * Math.PI * 2;
-        this.glow = Math.random() * 15 + 5;
-      }
-
-      update(time) {
-        // Move up
-        this.y -= this.speedY;
+      reset(initial = false) {
+        const numCols = Math.floor(width / colWidth);
+        this.col = Math.floor(Math.random() * numCols);
+        this.x = this.col * colWidth;
+        // If initial, scatter them vertically. Otherwise, start above screen.
+        this.y = initial ? Math.random() * height - height : Math.random() * -500 - 200;
+        this.length = Math.random() * 120 + 60;
+        this.speed = Math.random() * 4 + 2;
         
-        // Sway horizontally like a sine wave
-        this.x += Math.sin(time * 0.002 + this.phase) * 1.5;
+        // Colors from the reference image (Red, Green, Yellow, Orange)
+        const colors = ['#ff4b4b', '#4bff82', '#ffc14b', '#ff7b4b', '#f9f9f9'];
+        this.color = colors[Math.floor(Math.random() * colors.length)];
+      }
 
-        // Mouse interaction (repel gently)
-        const dx = mouse.x - this.x;
-        const dy = mouse.y - this.y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < 150) {
-          this.x -= dx * 0.02;
-          this.y -= dy * 0.02;
-        }
-
-        // Reset if off top
-        if (this.y < -50) {
+      update() {
+        this.y += this.speed;
+        if (this.y > height + 50) {
           this.reset();
-          this.y = height + 50;
         }
       }
 
       draw() {
         ctx.save();
-        ctx.font = `${this.size}px Arial`;
-        ctx.fillStyle = `rgba(0, 200, 255, ${this.opacity})`;
-        ctx.shadowBlur = this.glow;
-        ctx.shadowColor = '#00c8ff';
-        ctx.fillText(this.symbol, this.x, this.y);
+        ctx.beginPath();
+        ctx.moveTo(this.x, this.y);
+        ctx.lineTo(this.x, this.y + this.length);
+        
+        // Gradient for the falling laser (fades out at top, bright at bottom)
+        const grad = ctx.createLinearGradient(this.x, this.y, this.x, this.y + this.length);
+        grad.addColorStop(0, 'rgba(0,0,0,0)');
+        grad.addColorStop(0.7, this.color);
+        grad.addColorStop(1, '#ffffff');
+        
+        ctx.strokeStyle = grad;
+        ctx.lineWidth = 3;
+        ctx.lineCap = 'round';
+        
+        // Glow effect
+        ctx.shadowBlur = 15;
+        ctx.shadowColor = this.color;
+        
+        ctx.stroke();
         ctx.restore();
       }
     }
 
-    for (let i = 0; i < numNotes; i++) {
-      notes.push(new MusicNote());
+    for (let i = 0; i < numDrops; i++) {
+      drops.push(new FallingLine());
     }
 
-    const drawWavyLines = (time) => {
+    const drawGrid = () => {
       ctx.save();
-      ctx.strokeStyle = 'rgba(0, 200, 255, 0.08)';
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.04)';
       ctx.lineWidth = 1;
-      ctx.shadowBlur = 5;
-      ctx.shadowColor = '#00c8ff';
-
-      for (let i = 0; i < 5; i++) {
+      
+      const numCols = Math.floor(width / colWidth);
+      for (let i = 0; i <= numCols; i++) {
+        const x = i * colWidth;
         ctx.beginPath();
-        for (let x = 0; x < width; x += 10) {
-          const y = height * 0.5 + Math.sin(x * 0.003 + time * 0.001 + i) * 150 + (i * 20 - 40);
-          if (x === 0) ctx.moveTo(x, y);
-          else ctx.lineTo(x, y);
-        }
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, height);
         ctx.stroke();
       }
       ctx.restore();
     };
 
-    const handleMouseMove = (e) => {
-      mouse.x = e.clientX;
-      mouse.y = e.clientY;
-    };
-
-    const handleMouseLeave = () => {
-      mouse.x = -1000;
-      mouse.y = -1000;
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('mouseleave', handleMouseLeave);
-
-    const render = (time) => {
-      ctx.clearRect(0, 0, width, height);
-
-      // Draw bokeh background
-      const grad = ctx.createRadialGradient(width/2, height/2, 0, width/2, height/2, Math.max(width, height));
-      grad.addColorStop(0, '#0a192f');
-      grad.addColorStop(1, '#020617');
-      ctx.fillStyle = grad;
+    const render = () => {
+      // Dark slate background
+      ctx.fillStyle = '#1a1b26';
       ctx.fillRect(0, 0, width, height);
 
-      drawWavyLines(time);
+      drawGrid();
 
-      notes.forEach(note => {
-        note.update(time);
-        note.draw();
+      drops.forEach(drop => {
+        drop.update();
+        drop.draw();
       });
 
       animationFrameId = requestAnimationFrame(render);
     };
 
-    render(0);
+    render();
 
     return () => {
       window.removeEventListener('resize', resize);
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('mouseleave', handleMouseLeave);
       cancelAnimationFrame(animationFrameId);
     };
   }, []);
