@@ -28,14 +28,14 @@ for track in tracks:
                 if preview_url:
                     track.preview_url = preview_url
                     track.save()
-                    print(f"✅ Updated: {track.title} -> {preview_url}")
+                    print(f"[OK] Updated: {track.title} -> {preview_url}".encode('utf-8').decode('cp1252', 'ignore'))
                 else:
-                    print(f"❌ No preview for: {track.title}")
+                    print(f"[X] No preview for: {track.title}".encode('utf-8').decode('cp1252', 'ignore'))
             else:
-                print(f"❌ Not found on iTunes: {track.title}")
+                print(f"[X] Not found on iTunes: {track.title}".encode('utf-8').decode('cp1252', 'ignore'))
     except Exception as e:
         print(f"Error fetching {track.title}: {e}")
     
-    time.sleep(0.5) # rate limit
+    time.sleep(1.0) # rate limit
 
 print("Finished updating database with REAL iTunes songs!")

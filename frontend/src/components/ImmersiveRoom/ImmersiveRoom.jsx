@@ -467,13 +467,6 @@ const ImmersiveRoom = ({ onClose, mood, track, currentUser }) => {
     wasPlayingRef.current = isPlaying;
   }, [isPlaying, currentTrack, playNext]);
 
-  // Stop music on leave
-  useEffect(() => {
-    return () => {
-      if (pauseTrack) pauseTrack();
-    };
-  }, [pauseTrack]);
-
   const moodColor = useMemo(() => {
     switch (mood) {
       case 'hype': return '#ff3366';
