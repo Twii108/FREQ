@@ -87,6 +87,16 @@ class ChatConsumer(AsyncWebsocketConsumer):
             pass
 
         if self.user and self.user.is_authenticated:
+            if data.get('type') == 'position_update':
+                # Broadcast position
+                await self.channel_layer.group_send(self.room_group_name, {
+                    'type': 'position_update',
+                    'username': self.user.username,
+                    'position': data.get('position', {'x':0, 'z':0}),
+                    'color': data.get('color', '#00ff88'),
+                })
+                return
+
             await self.save_message(message)
             await self.channel_layer.group_send(self.room_group_name, {
                 'type': 'chat_message',
@@ -94,6 +104,17 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 'username': self.user.username,
                 'avatar_url': self.user.avatar_url,
                 'user_id': str(self.user.id),
+                'timestamp': timezone.now().isoformat(),
+                'sentiment_mood': sentiment_mood,
+                'sentiment_score': sentiment_score
+            })
+        else:
+            await self.channel_layer.group_send(self.room_group_name, {
+                'type': 'chat_message',
+                'message': message,
+                'username': 'Guest',
+                'avatar_url': None,
+                'user_id': None,
                 'timestamp': timezone.now().isoformat(),
                 'sentiment_mood': sentiment_mood,
                 'sentiment_score': sentiment_score
@@ -108,6 +129,14 @@ class ChatConsumer(AsyncWebsocketConsumer):
             'user_id': event.get('user_id', ''),
             'timestamp': event['timestamp'],
             'sentiment_mood': event.get('sentiment_mood', 'chill')
+        }))
+
+    async def position_update(self, event):
+        await self.send(text_data=json.dumps({
+            'type': 'position_update',
+            'username': event['username'],
+            'position': event['position'],
+            'color': event['color']
         }))
 
     async def user_join(self, event):
