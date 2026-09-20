@@ -169,14 +169,14 @@ const Avatar = ({ position, username, color, dancingOffset, isPlayer, setNearbyU
       if (leftArm.current) leftArm.current.rotation.x = Math.sin(t * 4 + dancingOffset) * 0.5;
       if (rightArm.current) rightArm.current.rotation.x = -Math.sin(t * 4 + dancingOffset) * 0.5;
 
-      // Proximity check for floating UI (1.8 units = very close)
+      // Proximity check for floating UI (3.0 units)
       if (!isPlayer && setNearbyUser) {
         const dist = camera.position.distanceTo(group.current.position);
-        if (dist < 1.8 && !showInfo) {
+        if (dist < 3.0 && !showInfo) {
           setShowInfo(true);
           setNearbyUser({ username, color });
         }
-        if (dist >= 1.8 && showInfo) {
+        if (dist >= 3.0 && showInfo) {
           setShowInfo(false);
           setNearbyUser(null);
         }

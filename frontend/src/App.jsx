@@ -20,7 +20,7 @@ import Concerts from './pages/Concerts/Concerts';
 import Header from './components/Header/Header';
 import BottomNav from './components/BottomNav/BottomNav';
 import NowPlaying from './components/NowPlaying/NowPlaying';
-import AmbientGlow from './components/AmbientGlow/AmbientGlow';
+import InteractiveBackground from './components/InteractiveBackground/InteractiveBackground';
 
 import { useState, useEffect } from 'react';
 import SplashScreen from './components/SplashScreen/SplashScreen';
@@ -50,7 +50,7 @@ const AppContent = () => {
   return (
     <div className="app-container-fullscreen">
       {showSplash && <SplashScreen onComplete={() => setShowSplash(false)} />}
-      <AmbientGlow />
+      <InteractiveBackground />
       {shouldShowHeader && <Header />}
 
       <div className="app-body-layout">
