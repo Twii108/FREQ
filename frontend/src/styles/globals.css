@@ -1,33 +1,33 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
 
 :root {
-  /* FREQ Neon Visualizer Theme: Deep Dark with Vibrant Meteor Accents */
-  --freq-purple: #ff4444;                  /* Primary Red */
-  --freq-purple-light: #ff7777;            
-  --freq-purple-dark: #cc0000;             
-  --freq-pink: #ffaa00;                    /* Accent Yellow/Orange */
-  --freq-pink-light: #ffcc44;
-  --freq-cyan: #00ff88;                    /* Accent Green */
-  --freq-orange: #ff7700;
+  /* FREQ Custom User Palette */
+  --freq-purple: #522C5D;                  
+  --freq-purple-light: #845162;            
+  --freq-purple-dark: #29104A;             
+  --freq-pink: #E3B5A4;                    
+  --freq-pink-light: #FFE3D8;
+  --freq-cyan: #E3B5A4;                    
+  --freq-orange: #845162;
   
-  --freq-bg: #121212;                  
-  --freq-bg-card: #1c1c1c;             
-  --freq-bg-card-hover: #262626;
-  --freq-bg-surface: #1e1e1e;
-  --freq-bg-input: #2a2a2a;
-  --freq-bg-elevated: #262626;
+  --freq-bg: #150016;                  
+  --freq-bg-card: rgba(41, 16, 74, 0.6);             
+  --freq-bg-card-hover: rgba(41, 16, 74, 0.9);
+  --freq-bg-surface: rgba(41, 16, 74, 0.7);
+  --freq-bg-input: rgba(41, 16, 74, 0.8);
+  --freq-bg-elevated: #29104A;
   
-  --freq-text: #ffffff;                
-  --freq-text-card: #ffffff;           
-  --freq-text-secondary: #cccccc;      
-  --freq-text-dim: #999999;            
+  --freq-text: #FFE3D8;                
+  --freq-text-card: #FFE3D8;           
+  --freq-text-secondary: #E3B5A4;      
+  --freq-text-dim: #845162;            
   
-  --freq-gradient: linear-gradient(135deg, #ff4444, #ffaa00);
-  --freq-gradient-purple: linear-gradient(135deg, #00ff88, #ffaa00);
-  --freq-success: #00ff88;
-  --freq-warning: #ffaa00;
+  --freq-gradient: linear-gradient(135deg, #522C5D, #845162);
+  --freq-gradient-purple: linear-gradient(135deg, #29104A, #522C5D);
+  --freq-success: #E3B5A4;
+  --freq-warning: #845162;
   --freq-error: #ff4444;
-  --freq-info: #00aaff;
+  --freq-info: #522C5D;
   
   --freq-radius-sm: 8px;
   --freq-radius-md: 12px;
@@ -36,41 +36,41 @@
   --freq-radius-full: 9999px;
   --freq-shadow-sm: 0 2px 8px rgba(0,0,0,0.2);
   --freq-shadow-md: 0 4px 16px rgba(0,0,0,0.4);
-  --freq-shadow-glow-purple: 0 4px 15px rgba(255, 68, 68, 0.4);
+  --freq-shadow-glow-purple: 0 4px 15px rgba(82, 44, 93, 0.4);
   --freq-font-heading: 'Inter', -apple-system, sans-serif;
   --freq-font-body: 'Space Grotesk', -apple-system, sans-serif;
   --freq-transition: all 0.2s ease;
   --freq-bottom-nav-height: 64px;
   --freq-now-playing-height: 64px;
   --freq-header-height: 56px;
-  --freq-bg-rgb: 18, 18, 18;
+  --freq-bg-rgb: 21, 0, 22;
 }
 
 [data-theme='dark'] {
-  /* Inherits from root since root is now default dark */
+  /* Inherits from root */
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 html, body {
   font-family: var(--freq-font-body);
-  background-color: var(--freq-bg);
+  background-color: transparent;
   color: var(--freq-text);
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
 
-#root { min-height: 100vh; display: flex; flex-direction: column; }
+#root { min-height: 100vh; display: flex; flex-direction: column; background: transparent; }
 h1, h2, h3, h4, h5, h6 { font-family: var(--freq-font-heading); font-weight: 800; color: var(--freq-text); }
-a { color: var(--freq-purple-dark); text-decoration: none; transition: var(--freq-transition); }
-a:hover { color: var(--freq-pink); }
+a { color: var(--freq-pink); text-decoration: none; transition: var(--freq-transition); }
+a:hover { color: var(--freq-pink-light); }
 button { cursor: pointer; border: none; outline: none; font-family: var(--freq-font-body); transition: var(--freq-transition); }
 input, textarea { font-family: var(--freq-font-body); outline: none; border: none; color: var(--freq-text); }
 
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: var(--freq-radius-full); }
+::-webkit-scrollbar-thumb { background: var(--freq-purple-light); border-radius: var(--freq-radius-full); }
 
 .app-container-fullscreen { 
   display: flex; 
@@ -78,7 +78,8 @@ input, textarea { font-family: var(--freq-font-body); outline: none; border: non
   min-height: 100vh; 
   width: 100%; 
   position: relative; 
-  background: var(--freq-bg); 
+  z-index: 1;
+  background: transparent; 
 }
 
 .app-body-layout {

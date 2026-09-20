@@ -12,7 +12,7 @@ const InteractiveBackground = () => {
 
     const meteors = [];
     const numMeteors = 45;
-    const colors = ['#ff4444', '#00ff88', '#ffcc00', '#ff8800', '#ffb8b8', '#aaffaa'];
+    const colors = ['#522C5D', '#845162', '#E3B5A4', '#FFE3D8', '#29104A'];
     const columns = 30; // Number of vertical grid lines
 
     const resize = () => {
@@ -104,8 +104,8 @@ const InteractiveBackground = () => {
     };
 
     const render = () => {
-      // Clear with dark gray background
-      ctx.fillStyle = '#111111';
+      // Clear with new dark purple background
+      ctx.fillStyle = '#150016';
       ctx.fillRect(0, 0, width, height);
 
       drawGrid();
