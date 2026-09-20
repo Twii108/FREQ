@@ -1,74 +1,53 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
 
 :root {
-  /* FREQ Modern High-Contrast Theme: Pure White Page + Black Font + Charcoal Gray Accents */
-  --freq-purple: #374151;                  /* Primary Charcoal Gray */
-  --freq-purple-light: #4B5563;            /* Medium Slate Gray */
-  --freq-purple-dark: #1F2937;             /* Dark Charcoal */
-  --freq-pink: #475569;
-  --freq-pink-light: #64748B;
-  --freq-cyan: #374151;
-  --freq-orange: #4B5563;
+  /* FREQ Neon Visualizer Theme: Deep Dark with Vibrant Meteor Accents */
+  --freq-purple: #ff4444;                  /* Primary Red */
+  --freq-purple-light: #ff7777;            
+  --freq-purple-dark: #cc0000;             
+  --freq-pink: #ffaa00;                    /* Accent Yellow/Orange */
+  --freq-pink-light: #ffcc44;
+  --freq-cyan: #00ff88;                    /* Accent Green */
+  --freq-orange: #ff7700;
   
-  --freq-bg: #FFFFFF;                  
-  --freq-bg-card: #FFFFFF;             
-  --freq-bg-card-hover: #F8FAFC;
-  --freq-bg-surface: #F8FAFC;
-  --freq-bg-input: #F1F5F9;
-  --freq-bg-elevated: #FFFFFF;
+  --freq-bg: #121212;                  
+  --freq-bg-card: #1c1c1c;             
+  --freq-bg-card-hover: #262626;
+  --freq-bg-surface: #1e1e1e;
+  --freq-bg-input: #2a2a2a;
+  --freq-bg-elevated: #262626;
   
-  --freq-text: #000000;                
-  --freq-text-card: #000000;           
-  --freq-text-secondary: #333333;      
-  --freq-text-dim: #64748B;            
+  --freq-text: #ffffff;                
+  --freq-text-card: #ffffff;           
+  --freq-text-secondary: #cccccc;      
+  --freq-text-dim: #999999;            
   
-  --freq-gradient: linear-gradient(135deg, #374151, #1F2937);
-  --freq-gradient-purple: linear-gradient(135deg, #4B5563, #1F2937);
-  --freq-success: #10B981;
-  --freq-warning: #F59E0B;
-  --freq-error: #EF4444;
-  --freq-info: #2563EB;
+  --freq-gradient: linear-gradient(135deg, #ff4444, #ffaa00);
+  --freq-gradient-purple: linear-gradient(135deg, #00ff88, #ffaa00);
+  --freq-success: #00ff88;
+  --freq-warning: #ffaa00;
+  --freq-error: #ff4444;
+  --freq-info: #00aaff;
+  
   --freq-radius-sm: 8px;
   --freq-radius-md: 12px;
   --freq-radius-lg: 16px;
   --freq-radius-xl: 24px;
   --freq-radius-full: 9999px;
-  --freq-shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
-  --freq-shadow-md: 0 4px 16px rgba(0,0,0,0.08);
-  --freq-shadow-glow-purple: 0 4px 14px rgba(31,41,55,0.2);
+  --freq-shadow-sm: 0 2px 8px rgba(0,0,0,0.2);
+  --freq-shadow-md: 0 4px 16px rgba(0,0,0,0.4);
+  --freq-shadow-glow-purple: 0 4px 15px rgba(255, 68, 68, 0.4);
   --freq-font-heading: 'Inter', -apple-system, sans-serif;
   --freq-font-body: 'Space Grotesk', -apple-system, sans-serif;
   --freq-transition: all 0.2s ease;
   --freq-bottom-nav-height: 64px;
   --freq-now-playing-height: 64px;
   --freq-header-height: 56px;
-  --freq-bg-rgb: 255, 255, 255;
+  --freq-bg-rgb: 18, 18, 18;
 }
 
 [data-theme='dark'] {
-  --freq-purple: #8B5CF6;
-  --freq-purple-light: #A78BFA;
-  --freq-purple-dark: #7C3AED;
-  --freq-pink: #EC4899;
-  --freq-pink-light: #F472B6;
-  --freq-cyan: #06B6D4;
-  --freq-orange: #F97316;
-  
-  --freq-bg: #121212;                  
-  --freq-bg-card: #1E1E1E;             
-  --freq-bg-card-hover: #2D2D2D;
-  --freq-bg-surface: #1E1E1E;
-  --freq-bg-input: #2D2D2D;
-  --freq-bg-elevated: #2D2D2D;
-  
-  --freq-text: #FFFFFF;                
-  --freq-text-card: #FFFFFF;           
-  --freq-text-secondary: #CBD5E1;      
-  --freq-text-dim: #94A3B8;            
-  
-  --freq-gradient: linear-gradient(135deg, #8B5CF6, #EC4899);
-  --freq-gradient-purple: linear-gradient(135deg, #A78BFA, #7C3AED);
-  --freq-bg-rgb: 18, 18, 18;
+  /* Inherits from root since root is now default dark */
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }

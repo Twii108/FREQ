@@ -9,11 +9,11 @@ const InteractiveBackground = () => {
     const ctx = canvas.getContext('2d');
     let animationFrameId;
     let width, height;
-    
-    // Grid configuration
-    const colWidth = 40;
-    const drops = [];
-    const numDrops = 40;
+
+    const meteors = [];
+    const numMeteors = 45;
+    const colors = ['#ff4444', '#00ff88', '#ffcc00', '#ff8800', '#ffb8b8', '#aaffaa'];
+    const columns = 30; // Number of vertical grid lines
 
     const resize = () => {
       width = window.innerWidth;
@@ -25,69 +25,76 @@ const InteractiveBackground = () => {
     window.addEventListener('resize', resize);
     resize();
 
-    class FallingLine {
+    class Meteor {
       constructor() {
         this.reset(true);
       }
 
-      reset(initial = false) {
-        const numCols = Math.floor(width / colWidth);
-        this.col = Math.floor(Math.random() * numCols);
-        this.x = this.col * colWidth;
-        // If initial, scatter them vertically. Otherwise, start above screen.
-        this.y = initial ? Math.random() * height - height : Math.random() * -500 - 200;
+      reset(randomY = false) {
+        // Snap to grid column
+        const colWidth = width / columns;
+        const colIndex = Math.floor(Math.random() * columns);
+        this.x = colIndex * colWidth + colWidth / 2;
+        
+        this.y = randomY ? Math.random() * height : -Math.random() * 500 - 100;
         this.length = Math.random() * 120 + 60;
         this.speed = Math.random() * 4 + 2;
-        
-        // Colors from the reference image (Red, Green, Yellow, Orange)
-        const colors = ['#ff4b4b', '#4bff82', '#ffc14b', '#ff7b4b', '#f9f9f9'];
         this.color = colors[Math.floor(Math.random() * colors.length)];
+        this.thickness = Math.random() * 2 + 1.5;
+        this.opacity = Math.random() * 0.7 + 0.3;
       }
 
       update() {
         this.y += this.speed;
-        if (this.y > height + 50) {
+
+        if (this.y - this.length > height) {
           this.reset();
         }
       }
 
       draw() {
         ctx.save();
-        ctx.beginPath();
-        ctx.moveTo(this.x, this.y);
-        ctx.lineTo(this.x, this.y + this.length);
-        
-        // Gradient for the falling laser (fades out at top, bright at bottom)
-        const grad = ctx.createLinearGradient(this.x, this.y, this.x, this.y + this.length);
-        grad.addColorStop(0, 'rgba(0,0,0,0)');
-        grad.addColorStop(0.7, this.color);
-        grad.addColorStop(1, '#ffffff');
-        
-        ctx.strokeStyle = grad;
-        ctx.lineWidth = 3;
-        ctx.lineCap = 'round';
-        
-        // Glow effect
+        ctx.globalAlpha = this.opacity;
         ctx.shadowBlur = 15;
         ctx.shadowColor = this.color;
-        
+        ctx.lineCap = 'round';
+        ctx.lineWidth = this.thickness;
+
+        // Gradient for the falling trail (head is opaque, tail is transparent)
+        const grad = ctx.createLinearGradient(this.x, this.y, this.x, this.y - this.length);
+        grad.addColorStop(0, this.color);
+        grad.addColorStop(1, 'rgba(0,0,0,0)');
+
+        ctx.strokeStyle = grad;
+        ctx.beginPath();
+        ctx.moveTo(this.x, this.y);
+        ctx.lineTo(this.x, this.y - this.length);
         ctx.stroke();
+
+        // Draw bright head
+        ctx.fillStyle = '#ffffff';
+        ctx.shadowBlur = 20;
+        ctx.shadowColor = '#ffffff';
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.thickness * 1.2, 0, Math.PI * 2);
+        ctx.fill();
+
         ctx.restore();
       }
     }
 
-    for (let i = 0; i < numDrops; i++) {
-      drops.push(new FallingLine());
+    for (let i = 0; i < numMeteors; i++) {
+      meteors.push(new Meteor());
     }
 
     const drawGrid = () => {
       ctx.save();
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.04)';
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.03)';
       ctx.lineWidth = 1;
       
-      const numCols = Math.floor(width / colWidth);
-      for (let i = 0; i <= numCols; i++) {
-        const x = i * colWidth;
+      const colWidth = width / columns;
+      for (let i = 0; i <= columns; i++) {
+        const x = i * colWidth + colWidth / 2;
         ctx.beginPath();
         ctx.moveTo(x, 0);
         ctx.lineTo(x, height);
@@ -97,15 +104,15 @@ const InteractiveBackground = () => {
     };
 
     const render = () => {
-      // Dark slate background
-      ctx.fillStyle = '#1a1b26';
+      // Clear with dark gray background
+      ctx.fillStyle = '#111111';
       ctx.fillRect(0, 0, width, height);
 
       drawGrid();
 
-      drops.forEach(drop => {
-        drop.update();
-        drop.draw();
+      meteors.forEach(meteor => {
+        meteor.update();
+        meteor.draw();
       });
 
       animationFrameId = requestAnimationFrame(render);
