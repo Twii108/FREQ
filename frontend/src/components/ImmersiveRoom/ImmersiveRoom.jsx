@@ -483,20 +483,42 @@ const ImmersiveRoom = ({ onClose, mood, track, currentUser }) => {
     }
   }, [mood]);
 
-  // Simulate users joining
+  const [roomUsers, setRoomUsers] = useState({});
+  const wsRef = useRef(null);
+  
+  // Real-time multiplayer connection
   useEffect(() => {
-    const users = ['melody_finder', 'arjun_vibe', 'chloe_grooves', 'sarah_vibe'];
-    let i = 0;
-    const timer = setInterval(() => {
-      if (i >= users.length) { clearInterval(timer); return; }
-      const user = users[i++];
-      const id = Date.now();
-      setPopups(p => [...p, { id, text: `👋 @${user} entered the room!` }]);
-      setChatMessages(m => [...m, { user, text: '✨ Just joined!', color: '#aaa' }]);
-      setTimeout(() => setPopups(p => p.filter(x => x.id !== id)), 3500);
-    }, 3000);
-    return () => clearInterval(timer);
-  }, []);
+    // In production, use wss:// and appropriate host
+    const wsUrl = `ws://${window.location.hostname}:8000/ws/chat/room_global/`;
+    const ws = new WebSocket(wsUrl);
+    wsRef.current = ws;
+
+    ws.onmessage = (e) => {
+      const data = JSON.parse(e.data);
+      if (data.type === 'position_update' && data.username !== currentUser) {
+        setRoomUsers(prev => ({
+          ...prev,
+          [data.username]: { username: data.username, color: data.color, position: [data.position.x, 0, data.position.z] }
+        }));
+      }
+      if (data.type === 'user_join' && data.username !== currentUser) {
+        setPopups(p => [...p, { id: Date.now(), text: `👋 @${data.username} entered the room!` }]);
+      }
+    };
+
+    return () => ws.close();
+  }, [currentUser]);
+
+  // Broadcast our own position when it changes
+  useEffect(() => {
+    if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
+      wsRef.current.send(JSON.stringify({
+        type: 'position_update',
+        position: playerPos,
+        color: '#00ff88'
+      }));
+    }
+  }, [playerPos]);
 
   const sendChat = () => {
     if (!chatInput.trim()) return;
@@ -504,14 +526,6 @@ const ImmersiveRoom = ({ onClose, mood, track, currentUser }) => {
     setChatMessages(m => [...m, msg]);
     setChatInput('');
   };
-
-  const roomUsers = [
-    { username: 'alex_beats', color: '#ff00ff', position: [-4, 0, -2] },
-    { username: 'tanvi_roliya', color: '#00ffff', position: [4, 0, -3] },
-    { username: 'melody_finder', color: '#ffff00', position: [-2, 0, -6] },
-    { username: 'rhythm_king', color: '#ff3300', position: [3, 0, -6] },
-    { username: 'chloe_grooves', color: '#33ff33', position: [-5, 0, -4] },
-  ];
 
   const themes = [
     { id: 'concert', label: '🎸 Concert Stage', icon: '🎸' },
@@ -679,7 +693,7 @@ const ImmersiveRoom = ({ onClose, mood, track, currentUser }) => {
           <Sparkles count={200} scale={14} size={5} speed={0.3} opacity={0.5} color={moodColor} position={[0, 3, -6]} />
 
           {/* ── USER AVATARS ── */}
-          {roomUsers.map((u, idx) => (
+          {Object.values(roomUsers).map((u, idx) => (
             <Avatar
               key={u.username}
               username={u.username}

@@ -16,7 +16,8 @@ print("Fetching real iTunes 30-second clips...")
 for track in tracks:
     try:
         # Search iTunes API
-        query = urllib.parse.quote(f"{track.title} {track.artist_name}")
+        artist_name = track.artist.name if hasattr(track, 'artist') and track.artist else ""
+        query = urllib.parse.quote(f"{track.title} {artist_name}")
         url = f"https://itunes.apple.com/search?term={query}&entity=song&limit=1"
         req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
         
