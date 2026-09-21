@@ -1,33 +1,33 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
 
 :root {
-  /* FREQ Soft Purple/Peach Palette */
-  --freq-purple: #522C5D;                  
-  --freq-purple-light: #845162;            
-  --freq-purple-dark: #29104A;             
-  --freq-pink: #E3B5A4;                    
-  --freq-pink-light: #FFE3D8;
-  --freq-cyan: #E3B5A4;                    
-  --freq-orange: #845162;
+  /* FREQ Soft Mauve/Sand Palette */
+  --freq-purple: #987185;                  
+  --freq-purple-light: #D6AA9F;            
+  --freq-purple-dark: #423736;             
+  --freq-pink: #E9D5B7;                    
+  --freq-pink-light: #F4E2D1;
+  --freq-cyan: #E9D5B7;                    
+  --freq-orange: #D6AA9F;
   
-  --freq-bg: #150016;                  
-  --freq-bg-card: rgba(41, 16, 74, 0.5);             
-  --freq-bg-card-hover: rgba(82, 44, 93, 0.6);
-  --freq-bg-surface: rgba(41, 16, 74, 0.7);
-  --freq-bg-input: rgba(41, 16, 74, 0.4);
-  --freq-bg-elevated: #522C5D;
+  --freq-bg: #423736;                  
+  --freq-bg-card: rgba(152, 113, 133, 0.3);             
+  --freq-bg-card-hover: rgba(152, 113, 133, 0.5);
+  --freq-bg-surface: rgba(152, 113, 133, 0.4);
+  --freq-bg-input: rgba(66, 55, 54, 0.6);
+  --freq-bg-elevated: #987185;
   
-  --freq-text: #FFE3D8;                
-  --freq-text-card: #FFE3D8;           
-  --freq-text-secondary: #E3B5A4;      
-  --freq-text-dim: #845162;            
+  --freq-text: #F4E2D1;                
+  --freq-text-card: #F4E2D1;           
+  --freq-text-secondary: #E9D5B7;      
+  --freq-text-dim: #D6AA9F;            
   
-  --freq-gradient: linear-gradient(135deg, #522C5D, #845162);
-  --freq-gradient-purple: linear-gradient(135deg, #29104A, #522C5D);
-  --freq-success: #E3B5A4;
-  --freq-warning: #845162;
+  --freq-gradient: linear-gradient(135deg, #987185, #D6AA9F);
+  --freq-gradient-purple: linear-gradient(135deg, #423736, #987185);
+  --freq-success: #E9D5B7;
+  --freq-warning: #D6AA9F;
   --freq-error: #ff4444;
-  --freq-info: #522C5D;
+  --freq-info: #987185;
   
   --freq-radius-sm: 8px;
   --freq-radius-md: 12px;
@@ -36,9 +36,9 @@
   --freq-radius-full: 9999px;
   
   /* Soft Neumorphic/Glass Shadows instead of borders */
-  --freq-shadow-sm: 0 4px 15px rgba(0,0,0,0.4), inset 0 2px 4px rgba(255,227,216,0.05);
-  --freq-shadow-md: 0 8px 25px rgba(0,0,0,0.5), inset 0 2px 6px rgba(255,227,216,0.05);
-  --freq-shadow-glow-purple: 0 4px 20px rgba(132, 81, 98, 0.4);
+  --freq-shadow-sm: 0 4px 15px rgba(0,0,0,0.4), inset 0 2px 4px rgba(244,226,209,0.1);
+  --freq-shadow-md: 0 8px 25px rgba(0,0,0,0.5), inset 0 2px 6px rgba(244,226,209,0.1);
+  --freq-shadow-glow-purple: 0 4px 20px rgba(152, 113, 133, 0.4);
   
   --freq-font-heading: 'Inter', -apple-system, sans-serif;
   --freq-font-body: 'Space Grotesk', -apple-system, sans-serif;
@@ -46,7 +46,7 @@
   --freq-bottom-nav-height: 64px;
   --freq-now-playing-height: 64px;
   --freq-header-height: 56px;
-  --freq-bg-rgb: 21, 0, 22;
+  --freq-bg-rgb: 66, 55, 54;
 }
 
 [data-theme='dark'] {
