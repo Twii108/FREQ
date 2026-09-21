@@ -10,11 +10,10 @@
   justify-content: space-between;
   padding: 0 24px;
   z-index: 100;
-  background: rgba(var(--freq-bg-rgb), 0.96);
+  background: rgba(var(--freq-bg-rgb), 0.6);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
-  border-bottom: 1.5px solid var(--freq-purple-light);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
 }
 
 .header-left-group {
@@ -29,13 +28,15 @@
   border-radius: 12px;
   display: flex; 
   align-items: center;
-  border: 1.5px solid var(--freq-purple-light);
-  transition: all 0.2s ease;
+  border: none;
+  box-shadow: var(--freq-shadow-sm);
+  transition: var(--freq-transition);
   color: var(--freq-text);
 }
 .header-menu:hover {
   background: var(--freq-bg-elevated);
-  border-color: var(--freq-purple);
+  box-shadow: var(--freq-shadow-md);
+  transform: translateY(-1px);
 }
 
 .header-brand {
@@ -53,8 +54,8 @@
   height: 28px;
   border-radius: 50%;
   object-fit: cover;
-  border: 1.5px solid #1F2937;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  border: none;
+  box-shadow: var(--freq-shadow-sm);
 }
 .header-brand-text {
   font-family: var(--freq-font-heading);
@@ -62,15 +63,16 @@
   font-size: 18px;
   letter-spacing: 2px;
   color: var(--freq-text);
-  padding: 4px 12px;
+  padding: 6px 14px;
   border-radius: var(--freq-radius-full);
-  border: 1.5px solid var(--freq-purple-light);
+  border: none;
   display: flex;
   align-items: center;
   background: var(--freq-bg-card);
+  box-shadow: var(--freq-shadow-sm);
 }
 .header-actions { display: flex; align-items: center; gap: 12px; }
-.header-icon { background: none; padding: 6px; position: relative; display: flex; align-items: center; color: var(--freq-text); }
+.header-icon { background: none; padding: 6px; position: relative; display: flex; align-items: center; color: var(--freq-text); border: none; }
 .header-notif .notif-badge {
   position: absolute; top: 0; right: 0;
   background: #EF4444; color: #FFFFFF;
@@ -78,11 +80,13 @@
   width: 16px; height: 16px;
   border-radius: 50%; display: flex;
   align-items: center; justify-content: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
 }
 .header-avatar {
   width: 32px; height: 32px;
   border-radius: 50%; overflow: hidden;
-  border: 2px solid var(--freq-purple-light);
+  border: none;
+  box-shadow: var(--freq-shadow-sm);
   cursor: pointer;
 }
 .header-avatar img { width: 100%; height: 100%; object-fit: cover; }
