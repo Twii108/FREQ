@@ -117,13 +117,13 @@ const Header = () => {
             className="header-icon" 
             aria-label="Toggle Theme" 
             onClick={() => {
-              const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-              if (isDark) {
+              const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+              if (isLight) {
                 document.documentElement.removeAttribute('data-theme');
-                localStorage.setItem('freq_theme', 'light');
-              } else {
-                document.documentElement.setAttribute('data-theme', 'dark');
                 localStorage.setItem('freq_theme', 'dark');
+              } else {
+                document.documentElement.setAttribute('data-theme', 'light');
+                localStorage.setItem('freq_theme', 'light');
               }
             }} 
             title="Toggle Theme"

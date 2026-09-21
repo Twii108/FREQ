@@ -5,7 +5,9 @@
   width: 100%;
   max-width: 100%;
   height: var(--freq-now-playing-height);
-  background: linear-gradient(135deg, rgba(22, 74, 50, 0.95), rgba(8, 45, 38, 0.95));
+  background: linear-gradient(135deg, rgba(22, 74, 50, 0.95), rgba(8, 45, 38, 0.95), rgba(51, 107, 71, 0.95));
+  background-size: 200% 200%;
+  animation: npGradientShift 8s ease infinite;
   display: flex; align-items: center;
   padding: 0 24px; gap: 16px;
   z-index: 99;
@@ -13,7 +15,13 @@
   -webkit-backdrop-filter: blur(24px);
   cursor: pointer;
   border: none;
-  box-shadow: 0 -4px 30px rgba(0,0,0,0.4);
+  box-shadow: 0 -4px 30px rgba(0,0,0,0.4), inset 0 2px 4px rgba(255, 255, 255, 0.05);
+}
+
+@keyframes npGradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 

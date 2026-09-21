@@ -37,9 +37,9 @@ const AppContent = () => {
   const [showSplash, setShowSplash] = useState(true);
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem('freq_theme') || 'light';
-    if (savedTheme === 'dark') {
-      document.documentElement.setAttribute('data-theme', 'dark');
+    const savedTheme = localStorage.getItem('freq_theme');
+    if (savedTheme === 'light') {
+      document.documentElement.setAttribute('data-theme', 'light');
     } else {
       document.documentElement.removeAttribute('data-theme');
     }
