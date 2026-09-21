@@ -67,6 +67,7 @@ const AppContent = () => {
             <Route path="/search" element={<ProtectedRoute><Search /></ProtectedRoute>} />
             <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
             <Route path="/concerts" element={<ProtectedRoute><Concerts /></ProtectedRoute>} />
+            <Route path="/room/:roomId" element={<ProtectedRoute><PrivateRoom /></ProtectedRoute>} />
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         </main>

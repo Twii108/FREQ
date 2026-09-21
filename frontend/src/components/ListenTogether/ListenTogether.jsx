@@ -136,6 +136,25 @@ const ListenTogether = () => {
           Enter FREQ Spatial (AR/VR)
         </button>
 
+        {/* Create Private Room Button */}
+        <button 
+          className="create-private-btn"
+          onClick={async () => {
+            const res = await fetch('http://127.0.0.1:8000/api/social/rooms/create/', {
+              method: 'POST',
+              headers: { 'Authorization': `Bearer ${localStorage.getItem('access_token')}` }
+            });
+            const data = await res.json();
+            if (data.id) window.location.href = `/room/${data.id}`;
+          }}
+          style={{
+            marginTop: '12px', width: '100%', padding: '12px', background: 'var(--freq-gradient)', color: 'var(--freq-bg)', border: 'none', borderRadius: '12px', fontWeight: 'bold', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', boxShadow: 'var(--freq-shadow-sm)'
+          }}
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+          Create Private Room
+        </button>
+
         {/* Floating Emoji Canvas Overlay */}
         <div className="lt-floating-layer">
           {floatingEmojis.map(e => (

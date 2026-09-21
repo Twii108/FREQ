@@ -440,3 +440,80 @@ class UserConcertsView(APIView):
         attendances = ConcertAttendance.objects.filter(user=target_user).select_related('concert')
         concerts = [a.concert for a in attendances]
         return Response(ConcertSerializer(concerts, many=True, context={'request': request}).data)
+
+# PRIVATE ROOMS APIs
+# ==========================================
+import uuid
+from .models import PrivateRoom, RoomGuest, TrackRequest
+
+class PrivateRoomListView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+    def get(self, request):
+        rooms = PrivateRoom.objects.filter(is_active=True)
+        return Response([{'id': r.id, 'name': r.name, 'owner': r.owner.username} for r in rooms])
+
+class CreatePrivateRoomView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+    def post(self, request):
+        room_id = str(uuid.uuid4())[:8]
+        name = request.data.get('name', f"{request.user.username}'s Room")
+        room = PrivateRoom.objects.create(id=room_id, owner=request.user, name=name)
+        RoomGuest.objects.create(room=room, user=request.user)
+        return Response({'id': room.id, 'name': room.name, 'owner': request.user.username})
+
+class PrivateRoomDetailView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+    def get(self, request, room_id):
+        try:
+            room = PrivateRoom.objects.get(id=room_id)
+            guests = [g.user.username for g in room.guests.all()]
+            requests = [{'id': r.id, 'requested_by': r.requested_by.username, 'track': r.track_data, 'status': r.status} for r in room.track_requests.filter(status='pending')]
+            return Response({
+                'id': room.id,
+                'name': room.name,
+                'owner': room.owner.username,
+                'current_track': room.current_track,
+                'guests': guests,
+                'pending_requests': requests
+            })
+        except PrivateRoom.DoesNotExist:
+            return Response({'error': 'Not found'}, status=404)
+
+class JoinPrivateRoomView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+    def post(self, request, room_id):
+        try:
+            room = PrivateRoom.objects.get(id=room_id)
+            RoomGuest.objects.get_or_create(room=room, user=request.user)
+            return Response({'status': 'joined'})
+        except PrivateRoom.DoesNotExist:
+            return Response({'error': 'Not found'}, status=404)
+
+class RequestTrackView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+    def post(self, request, room_id):
+        try:
+            room = PrivateRoom.objects.get(id=room_id)
+            if request.user == room.owner:
+                room.current_track = request.data.get('track_data')
+                room.save()
+                return Response({'status': 'played'})
+            else:
+                TrackRequest.objects.create(room=room, requested_by=request.user, track_data=request.data.get('track_data'))
+                return Response({'status': 'requested'})
+        except PrivateRoom.DoesNotExist:
+            return Response({'error': 'Not found'}, status=404)
+
+class ApproveTrackView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+    def post(self, request, room_id, request_id):
+        try:
+            room = PrivateRoom.objects.get(id=room_id, owner=request.user)
+            track_req = TrackRequest.objects.get(id=request_id, room=room)
+            track_req.status = 'approved'
+            track_req.save()
+            room.current_track = track_req.track_data
+            room.save()
+            return Response({'status': 'approved', 'current_track': room.current_track})
+        except (PrivateRoom.DoesNotExist, TrackRequest.DoesNotExist):
+            return Response({'error': 'Not found or not authorized'}, status=404)
