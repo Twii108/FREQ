@@ -18,7 +18,7 @@ const PrivateRoom = () => {
 
   const fetchRoom = async () => {
     try {
-      const res = await fetch(\http://127.0.0.1:8000/api/social/rooms/\/\, {
+      const res = await fetch(\http://\:8000/api/social/rooms/\/\, {
         headers: { 'Authorization': \Bearer \\ }
       });
       if (res.ok) {
@@ -35,7 +35,7 @@ const PrivateRoom = () => {
   };
 
   const handleApprove = async (reqId) => {
-    await fetch(\http://127.0.0.1:8000/api/social/rooms/\/approve/\/\, {
+    await fetch(\http://\:8000/api/social/rooms/\/approve/\/\, {
       method: 'POST',
       headers: { 'Authorization': \Bearer \\ }
     });

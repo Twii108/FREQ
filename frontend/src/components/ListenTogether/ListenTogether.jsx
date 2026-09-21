@@ -15,7 +15,7 @@ const ListenTogether = () => {
 
   const fetchSyncRoom = async () => {
     try {
-      const res = await fetch('http://127.0.0.1:8000/api/social/listen-together/');
+      const res = await fetch(`http://${window.location.hostname}:8000/api/social/listen-together/`);
       const data = await res.json();
       setRoomData(data);
     } catch {
@@ -140,7 +140,7 @@ const ListenTogether = () => {
         <button 
           className="create-private-btn"
           onClick={async () => {
-            const res = await fetch('http://127.0.0.1:8000/api/social/rooms/create/', {
+            const res = await fetch(`http://${window.location.hostname}:8000/api/social/rooms/create/`, {
               method: 'POST',
               headers: { 'Authorization': `Bearer ${localStorage.getItem('access_token')}` }
             });
