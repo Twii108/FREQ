@@ -71,10 +71,10 @@ const InteractiveBackground = () => {
         ctx.lineTo(this.x, this.y - this.length);
         ctx.stroke();
 
-        // Draw bright head
-        ctx.fillStyle = '#ffffff';
+        // Draw bright head using the lightest palette color
+        ctx.fillStyle = '#DAF1DE';
         ctx.shadowBlur = 20;
-        ctx.shadowColor = '#ffffff';
+        ctx.shadowColor = '#DAF1DE';
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.thickness * 1.2, 0, Math.PI * 2);
         ctx.fill();
@@ -89,7 +89,7 @@ const InteractiveBackground = () => {
 
     const drawGrid = () => {
       ctx.save();
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.03)';
+      ctx.strokeStyle = 'rgba(218, 241, 222, 0.03)';
       ctx.lineWidth = 1;
       
       const colWidth = width / columns;
