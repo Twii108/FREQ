@@ -104,8 +104,9 @@ const InteractiveBackground = () => {
     };
 
     const render = () => {
-      // Clear with new dark background
-      ctx.fillStyle = '#031F22';
+      // Clear with theme background
+      const bgColor = getComputedStyle(document.documentElement).getPropertyValue('--freq-bg').trim() || '#031F22';
+      ctx.fillStyle = bgColor;
       ctx.fillRect(0, 0, width, height);
 
       drawGrid();

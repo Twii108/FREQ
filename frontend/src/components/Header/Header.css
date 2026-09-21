@@ -62,7 +62,7 @@
   font-weight: 900;
   font-size: 18px;
   letter-spacing: 2px;
-  color: var(--freq-text);
+  color: var(--freq-cyan); /* Light Green */
   padding: 6px 14px;
   border-radius: var(--freq-radius-full);
   border: none;

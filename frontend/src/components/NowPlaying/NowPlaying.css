@@ -5,7 +5,7 @@
   width: 100%;
   max-width: 100%;
   height: var(--freq-now-playing-height);
-  background: linear-gradient(135deg, rgba(124,58,237,0.95), rgba(236,72,153,0.85));
+  background: linear-gradient(135deg, rgba(22, 74, 50, 0.95), rgba(8, 45, 38, 0.95));
   display: flex; align-items: center;
   padding: 0 24px; gap: 16px;
   z-index: 99;
