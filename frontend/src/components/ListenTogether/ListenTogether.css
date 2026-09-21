@@ -6,7 +6,7 @@
   background: var(--freq-bg-card);
   border: none;
   box-shadow: var(--freq-shadow-sm);
-  color: #FFFFFF;
+  color: var(--freq-text);
   overflow: hidden;
 }
 
@@ -21,7 +21,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  background: rgba(130, 186, 147, 0.2);
+  background: var(--freq-bg-surface);
   padding: 6px 14px;
   border-radius: 20px;
   border: none;
@@ -30,9 +30,9 @@
 .lt-pulse {
   width: 8px;
   height: 8px;
-  background-color: #82BA93;
+  background-color: var(--freq-success);
   border-radius: 50%;
-  box-shadow: 0 0 10px #82BA93;
+  box-shadow: 0 0 10px var(--freq-success);
   animation: pulse-glow 1.2s infinite alternate;
 }
 
@@ -45,13 +45,13 @@
   font-size: 11px;
   font-weight: 800;
   letter-spacing: 1px;
-  color: #82BA93;
+  color: var(--freq-success);
 }
 
 .lt-listeners-count {
   font-size: 13px;
   font-weight: 700;
-  color: #DAF1DE;
+  color: var(--freq-text-secondary);
 }
 
 .lt-main-stage {
@@ -93,15 +93,15 @@
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #164A32, #336B47);
+  background: var(--freq-gradient);
   border: none;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  box-shadow: 0 4px 16px rgba(124, 58, 237, 0.6);
+  box-shadow: var(--freq-shadow-sm);
   transition: transform 0.2s;
-  color: #FFFFFF;
+  color: var(--freq-bg);
 }
 
 .lt-sync-play-btn:hover {
@@ -116,19 +116,19 @@
   font-size: 18px;
   font-weight: 800;
   margin: 0 0 4px 0;
-  color: #FFFFFF;
+  color: var(--freq-text);
 }
 
 .lt-artist {
   font-size: 14px;
-  color: #A78BFA;
+  color: var(--freq-text-secondary);
   margin: 0 0 6px 0;
   font-weight: 700;
 }
 
 .lt-room-subtitle {
   font-size: 12px;
-  color: #CBD5E1;
+  color: var(--freq-text-dim);
   font-weight: 600;
 }
 
@@ -160,13 +160,13 @@
   justify-content: space-between;
   margin-top: 16px;
   padding-top: 12px;
-  border-top: 1px solid #2A2A3E;
+  border-top: 1px solid var(--freq-bg-surface);
 }
 
 .lt-react-label {
   font-size: 12px;
   font-weight: 700;
-  color: #E2E8F0;
+  color: var(--freq-text);
 }
 
 .lt-emoji-buttons {
@@ -175,19 +175,20 @@
 }
 
 .lt-emoji-btn {
-  background: #252538;
-  border: 1px solid #32324D;
+  background: var(--freq-bg-input);
+  border: none;
+  box-shadow: var(--freq-shadow-sm);
   border-radius: 12px;
   padding: 6px 12px;
   font-size: 18px;
   cursor: pointer;
   transition: all 0.2s;
-  color: #FFFFFF;
+  color: var(--freq-text);
 }
 
 .lt-emoji-btn:hover {
-  background: rgba(124, 58, 237, 0.3);
-  border-color: #7C3AED;
+  background: var(--freq-bg-elevated);
+  box-shadow: var(--freq-shadow-md);
   transform: scale(1.2);
 }
 
