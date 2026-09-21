@@ -118,3 +118,33 @@ class ConcertAttendance(models.Model):
 
     def __str__(self):
         return f"{self.user.username} attending {self.concert.title}"
+
+class PrivateRoom(models.Model):
+    id = models.CharField(max_length=50, primary_key=True)
+    owner = models.ForeignKey('accounts.User', on_delete=models.CASCADE, related_name='owned_rooms')
+    name = models.CharField(max_length=255)
+    current_track = models.JSONField(null=True, blank=True)
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        db_table = 'private_rooms'
+
+class RoomGuest(models.Model):
+    room = models.ForeignKey(PrivateRoom, on_delete=models.CASCADE, related_name='guests')
+    user = models.ForeignKey('accounts.User', on_delete=models.CASCADE)
+    joined_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        db_table = 'room_guests'
+        unique_together = ('room', 'user')
+
+class TrackRequest(models.Model):
+    room = models.ForeignKey(PrivateRoom, on_delete=models.CASCADE, related_name='track_requests')
+    requested_by = models.ForeignKey('accounts.User', on_delete=models.CASCADE)
+    track_data = models.JSONField()
+    status = models.CharField(max_length=20, default='pending') # pending, approved, denied
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        db_table = 'track_requests'

@@ -193,8 +193,8 @@ export const PlaybackProvider = ({ children }) => {
 
     audio.onerror = () => {
       if (playSequenceIdRef.current === currentSeq) {
-        audio.src = VERIFIED_PREVIEWS[0];
-        audio.play().catch(() => playNext());
+        console.warn('Audio failed to load, skipping to next track...');
+        playNext();
       }
     };
 
