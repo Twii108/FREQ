@@ -3,9 +3,9 @@
   border-radius: 20px;
   padding: 20px;
   margin-bottom: 24px;
-  background: #181825;
-  border: 1px solid #2A2A3E;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+  background: var(--freq-bg-card);
+  border: none;
+  box-shadow: var(--freq-shadow-sm);
   color: #FFFFFF;
   overflow: hidden;
 }
@@ -21,18 +21,18 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  background: rgba(236, 72, 153, 0.2);
+  background: rgba(130, 186, 147, 0.2);
   padding: 6px 14px;
   border-radius: 20px;
-  border: 1px solid rgba(236, 72, 153, 0.5);
+  border: none;
 }
 
 .lt-pulse {
   width: 8px;
   height: 8px;
-  background-color: #EC4899;
+  background-color: #82BA93;
   border-radius: 50%;
-  box-shadow: 0 0 10px #EC4899;
+  box-shadow: 0 0 10px #82BA93;
   animation: pulse-glow 1.2s infinite alternate;
 }
 
@@ -45,13 +45,13 @@
   font-size: 11px;
   font-weight: 800;
   letter-spacing: 1px;
-  color: #EC4899;
+  color: #82BA93;
 }
 
 .lt-listeners-count {
   font-size: 13px;
   font-weight: 700;
-  color: #E2E8F0;
+  color: #DAF1DE;
 }
 
 .lt-main-stage {
@@ -72,8 +72,8 @@
   height: 100%;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid #374151;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  border: none;
+  box-shadow: var(--freq-shadow-sm);
 }
 
 .lt-album-art.spinning {
@@ -93,7 +93,7 @@
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #374151, #1F2937);
+  background: linear-gradient(135deg, #164A32, #336B47);
   border: none;
   display: flex;
   align-items: center;

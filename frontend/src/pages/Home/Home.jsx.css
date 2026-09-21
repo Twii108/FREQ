@@ -10,7 +10,8 @@
   z-index: 10;
   display: flex;
   background: var(--freq-bg);
-  border-bottom: 1.5px solid var(--freq-purple-light);
+  border: none;
+  box-shadow: var(--freq-shadow-sm);
   margin-bottom: 16px;
 }
 .feed-posts {
@@ -47,18 +48,18 @@
 }
 .skeleton-post {
   height: 120px;
-  background: #F1F5F9;
+  background: var(--freq-bg-elevated);
   border-radius: var(--freq-radius-lg);
   animation: pulse 1.5s infinite;
 }
 .feed-empty {
   text-align: center;
   padding: 60px 24px;
-  color: #64748B;
+  color: var(--freq-text-secondary);
 }
 .feed-empty svg {
   margin-bottom: 16px;
-  color: #1F2937;
+  color: var(--freq-text-dim);
 }
 .fab-post-btn {
   position: fixed;
@@ -67,16 +68,16 @@
   width: 56px;
   height: 56px;
   border-radius: 50%;
-  background: #1F2937;
-  box-shadow: 0 8px 24px rgba(31, 41, 55, 0.4);
+  background: var(--freq-purple-dark);
+  box-shadow: var(--freq-shadow-sm);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 100;
-  border: 2px solid #FFFFFF;
+  border: none;
   cursor: pointer;
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  color: #FFFFFF;
+  color: var(--freq-text);
 }
 @media (max-width: 768px) {
   .fab-post-btn {
@@ -88,7 +89,7 @@
 }
 .fab-post-btn:hover {
   transform: scale(1.1) rotate(90deg);
-  background: #374151;
+  background: var(--freq-purple);
 }
 
 .modal-overlay {
@@ -126,7 +127,7 @@
 .close-btn {
   background: none;
   font-size: 18px;
-  color: #94A3B8;
+  color: var(--freq-text-secondary);
 }
 .post-form {
   display: flex;
